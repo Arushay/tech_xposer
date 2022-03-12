@@ -2,8 +2,8 @@
 import * as fs from 'fs'
 
 export default function handler(req, res) {
-  fs.readFile("blogdata/CSS Cheatsheet.json", "utf-8", (err, data)=>{
-    console.log()
-    res.status(200).json(JSON.parse(data))
+  fs.readdir("blogdata",  (err, data)=>{
+    console.log(data)
+    res.status(200).json(data)
   })
 }
