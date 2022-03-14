@@ -1,5 +1,6 @@
 {
     "title": "JavaScript Cheatsheet",
     "content": "JavaScript Basics Set of JavaScript basic syntax to add, execute and write basic programming paradigms in Javascript",
-    "source": "JavaScript Documentation"
+    "source": "JavaScript Documentation",
+    "slug": "JavaScript Cheatsheet"
 }
