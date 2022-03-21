@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import * as fs from 'fs'
 
-const slug = () => {
-    const [blog, setBlog] = useState()
-    const router = useRouter();
-    useEffect(() => {
-        if (!router.isReady) return;
-        const { slug } = router.query;
-        fetch(`http://localhost:3000/api/getblog?slug=${slug}`).then((a) => {
-            return a.json()
-        })
-            .then((parsed) => {
-                setBlog(parsed)
-            })
-    }, [router.isReady])
-
+const slug = (props) => {
+  function createMarkup(c) {
+    return {__html: c};
+  }
+    const [blog, setBlog] = useState(props.myblog)
    
     return (
         <div>
@@ -22,7 +14,7 @@ const slug = () => {
                 <div className="container px-5 py-24 mx-auto">
                     <div className="flex flex-col text-center w-100 mb-20">
                         <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 py-2">{blog && blog.title}</h1>
-                        <p className="leading-relaxed text-base py-2">{blog && blog.content}</p>
+                       {blog &&  <p dangerouslySetInnerHTML={createMarkup(blog.content)} className="leading-relaxed text-base py-2"></p> }
                     </div>
                 </div>
             </section>
@@ -31,7 +23,28 @@ const slug = () => {
     )
 }
 
+
+
+export async function getStaticPaths() {
+    return {
+      paths: [
+        { params: { slug: "CSS Cheatsheet" } },
+        { params: { slug: "CSS Javascript" } },
+      ],
+      fallback: true // false or 'blocking'
+    };
+  }
+
+export async function getStaticProps(context) {
+    const { slug } = context.params;
+    let myblog = await fs.promises.readFile(`blogdata/${slug}.json`, "utf-8")
+    
+    return {
+      props: { myblog: JSON.parse(myblog) }, // will be passed to the page component as props
+    }
+  }
+
 export default slug;
 
 
-// i update this page on 11 march and it worked 
+ 
