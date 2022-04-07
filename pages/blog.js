@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import Link from 'next/link'
-import * as fs from 'fs'
-import InfiniteScroll from 'react-infinite-scroll-component'
+import React, { useState } from 'react';
+import Link from 'next/link';
+import * as fs from 'fs';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const blog = (props) => {
-  const [blogs, setBlogs] = useState(props.allBlogs)
+  const [blogs, setBlogs] = useState(props.allBlogs);
   const [count, setCount] = useState(2)
   const fetchData = async () => {
     let d = await fetch(`http://localhost:3000/api/blogs/?count=${count + 2}`)
@@ -45,11 +45,11 @@ const blog = (props) => {
                       </div>
                       <div className="flex-grow">
                         <p className="leading-relaxed text-base">{blogItem.metadesc.substr(0, 270)}...</p>
-                        <a className="mt-3 text-indigo-500 inline-flex items-center cursor-pointer">Learn More
+                        <Link href={`/blogpost/${blogItem.slug}`}><a className="mt-3 text-indigo-500 inline-flex items-center cursor-pointer">Learn More
                           <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                             <path d="M5 12h14M12 5l7 7-7 7"></path>
                           </svg>
-                        </a>
+                        </a></Link>
                       </div>
                     </div>
                   </div>
@@ -71,7 +71,7 @@ export async function getStaticProps(context) {
   let data = await fs.promises.readdir("blogdata");
   let allCount = data.length;
   let myfile;
-  let allBlogs = []
+  let allBlogs = [];
   for (let index = 0; index < 2; index++) {
     const item = data[index];
     myfile = await fs.promises.readFile(('blogdata/' + item), "utf-8")
