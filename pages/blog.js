@@ -7,7 +7,7 @@ const blog = (props) => {
   const [blogs, setBlogs] = useState(props.allBlogs);
   const [count, setCount] = useState(2)
   const fetchData = async () => {
-    let d = await fetch(`http://localhost:3000/api/blogs/?count=${count + 2}`)
+    let d = await fetch(`http://localhost:3000/api/blogs/?count=${count+2}`)
     setCount(count + 2)
     let data = await d.json()
     setBlogs(data)
@@ -33,17 +33,17 @@ const blog = (props) => {
         }
       >
         {blogs.map((blogItem) => {
-          return <section className="text-gray-600 body-font">
-            <div className="flex flex-col text-center w-full mb-4">
-              <div className="container px-4 py-4">
-                <div className="flex flex-row -m-4  items-center" key={blogItem.slug}>
-                  <div className="p-4 md:w-1/3">
+          return <section className="text-gray-600 body-font" key={blogItem.slug}>
+            {/* <div className="flex md:justify-center" > */}
+              {/* <div className="container px-5 py-2">
+                <div className="flex flex-wrap -m-4  items-center"> */}
+                  <div className="p-6 md:w-1/2 lg:w-1/4 w-full items-center ">
                     <div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
                       <div className="flex flex-row items-center mb-3">
                         <Link href={`/blogpost/${blogItem.slug}`}>
                           <h2 className="text-gray-900 text-lg title-font font-medium cursor-pointer">{blogItem.title}</h2></Link>
                       </div>
-                      <div className="flex-grow">
+                      <div className="flex-row">
                         <p className="leading-relaxed text-base">{blogItem.metadesc.substr(0, 270)}...</p>
                         <Link href={`/blogpost/${blogItem.slug}`}><a className="mt-3 text-indigo-500 inline-flex items-center cursor-pointer">Learn More
                           <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
@@ -52,9 +52,9 @@ const blog = (props) => {
                         </a></Link>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+                  {/* </div>
+                </div> */}
+              {/* </div> */}
             </div>
           </section>
 
